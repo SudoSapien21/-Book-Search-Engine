@@ -35,7 +35,9 @@ const typeDefs = gql`
   }
   # declaring me to the user
   type Query {
-    me: User
+     user: [User]    
+      
+
   }
   # declaring the mutation types
   type Mutation {
