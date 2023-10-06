@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 // import useMutation from the apollo
 import { useMutation } from "@apollo/client";
-
 import { Form, Button, Alert } from "react-bootstrap";
-
 import { LOGIN_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
