@@ -1,12 +1,14 @@
-const express = require('express');
-const path = require('path');
-const db = require('./config/connection');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
-const routes = require('./routes');
+const path = require('path');
 
-const app = express();
+const { typeDefs, resolvers } = require('./schemas');
+const db = require('./config/connection');
+
+const express = require('express');
+// const routes = require('./routes');
+
 const PORT = process.env.PORT || 3001;
+const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -19,6 +21,10 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.use(routes);
 
@@ -36,4 +42,3 @@ const startApolloServer = async () => {
   
 // Call the async function to start the server
   startApolloServer();
- 

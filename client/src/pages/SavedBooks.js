@@ -1,4 +1,9 @@
-// import { useState, useEffect } from 'react';
+// import Auth from "../utils/auth";
+// import { removeBookId, saveBookIds } from "../utils/localStorage";
+// import { ALL_MINE } from "../utils/queries";
+// import { REMOVE_BOOK } from "../utils/mutations";
+// import { useQuery, useMutation } from "@apollo/client";
+
 import {
   Container,
   Card,
@@ -7,23 +12,48 @@ import {
   Col
 } from 'react-bootstrap';
 
-import Auth from "../utils/auth";
-import { removeBookId, saveBookIds } from "../utils/localStorage";
-import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
 
+import { useQuery, useMutation } from '@apollo/client'; // Import the useQuery and useMutation Hooks
+import { GET_ME } from '../utils/queries'; // Import the GET_ME query
+import { REMOVE_BOOK } from '../utils/mutations'; // Import the REMOVE_BOOK mutation
+import Auth from '../utils/auth';
+import { removeBookId } from '../utils/localStorage'
 
 const SavedBooks = () => {
-  // took off the use effect func and substitutes it useQuery to get the data
-  const { loading, data } = useQuery(GET_ME);
-  const userData = data?.me || [];
+  const { loading, data } = useQuery(GET_ME); // Execute the GET_ME query
+  const userData = data?.me || {}; 
 
-  const [removeBook] = useMutation(REMOVE_BOOK);
+  // use this to determine if `useEffect()` hook needs to run again
+  const userDataLength = Object.keys(userData).length;
+
+  useQuery(() => {
+    const getUserData = async () => {
+      try {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
   
+        if (!token) {
+          return false;
+        }
+  
+        const response = await GET_ME(token);
+  
+        if (!response.ok) {
+          throw new Error('something went wrong!');
+        }
+  
+        const user = await response.json();
+          data(user);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getUserData();
+  }, [userDataLength]);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async bookId => {
+  const [removeBookMutation] = useMutation(REMOVE_BOOK);
+  
+  const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -31,16 +61,16 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook({
-        variables: { bookId: bookId },
+      const { data } = await removeBookMutation({
+        variables: { bookId },
+        context: { headers: { authorization: `Bearer ${token}` } },
       });
+      
 
-      if (!response) {
-        throw new Error("something went wrong!");
-      }
-
-      // upon success, remove book's id from localStorage
+      const updatedUser = data.removeBook;         
       removeBookId(bookId);
+      data(updatedUser);
+      // setUserData (updatedUser);
     } catch (err) {
       console.error(err);
     }
@@ -51,11 +81,6 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
-  // get info from localStorage by the use data queries
-  const savedBookIds = userData.savedBooks.map(book => book.bookId);
-  saveBookIds(savedBookIds);
-
-
   return (
     <>
       <div fluid className="text-light bg-dark p-5">
@@ -64,15 +89,13 @@ const SavedBooks = () => {
         </Container>
       </div>
       <Container>
-      <h2>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? "book" : "books"
-              }:`
-            : "You have no saved books!"}
+        <h2 className='pt-5'>
+          {loading.savedBooks.length
+            ? `Viewing ${userData.savedBooks.length} saved ${loading.savedBooks.length === 1 ? 'book' : 'books'}:`
+            : 'You have no saved books!'}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {loading.savedBooks.map((book) => {
             return (
               <Col md="4">
                 <Card key={book.bookId} border='dark'>

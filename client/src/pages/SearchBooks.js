@@ -1,3 +1,8 @@
+// import Auth from '../utils/auth';
+// import { searchGoogleBooks } from '../utils/API';
+// import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+// import { SAVE_BOOK } from "../utils/mutations";
+// import { useMutation } from "@apollo/client";
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -9,10 +14,9 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
+import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
-import { SAVE_BOOK } from "../utils/mutations";
-import { useMutation } from "@apollo/client";
+import { useMutation } from '@apollo/client'; 
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -21,7 +25,7 @@ const SearchBooks = () => {
   const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  const [savedBookIds, setSavedBookIds] = useMutation(getSavedBookIds());
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -29,7 +33,7 @@ const SearchBooks = () => {
     return () => saveBookIds(savedBookIds);
   });
    // added use mutation for the error and saveBook
-   const [saveBook] = useMutation(SAVE_BOOK);
+  //  const [saveBook] = useMutation(SAVE_BOOK);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -76,12 +80,7 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook({
-        variables: {
-          input: bookToSave,
-        },
-        
-      });;
+      const response = await saveBook(bookToSave, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -130,8 +129,8 @@ const SearchBooks = () => {
         <Row>
           {searchedBooks.map((book) => {
             return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
+              <Col md="4" key={book.bookId}>
+                <Card border='dark'>
                   {book.image ? (
                     <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
                   ) : null}
