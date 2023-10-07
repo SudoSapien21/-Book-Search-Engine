@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
+
 import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
 
@@ -11,6 +12,8 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -30,8 +33,16 @@ const SignupForm = () => {
     try {
       const response = await createUser(userFormData);
   
+      // Log the response status code
+      console.log(response.status);
+  
+      const responseText = await response.text(); // Read the response body once
+  
+      // Log the response text
+      console.log(responseText);
+  
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = JSON.parse(responseText); // Parse the response text as JSON
         if (errorData.message) {
           // Handle specific error message from the server
           throw new Error(errorData.message);
@@ -41,17 +52,17 @@ const SignupForm = () => {
         }
       }
   
-      const responseData = await response.json();
+      const responseData = JSON.parse(responseText); // Parse the response text as JSON
   
       if (responseData.token && responseData.user) {
         console.log(responseData.user);
         Auth.login(responseData.token);
       } else {
         console.error('Unexpected response from server:', responseData);
-        throw new Error('Unexpected response from server during signup.');
+        throw new Error('Unexpected response from the server during signup.');
       }
     } catch (err) {
-      console.error("Error during signup:", err.message);
+      console.error("Error during signup:");
       setShowAlert(true);
     }
   
