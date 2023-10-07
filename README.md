@@ -65,15 +65,15 @@ Google Book Search Engine is your gateway to a vast literary universe! With Goog
 
 ## Credit
 
-https://www.apollographql.com/
+[1]: https://www.apollographql.com/ "Apollo  Graphql"
 
-https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD
+[2]:https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD "MERN DAY 1"
 
-https://zoom.us/rec/play/rzY2W_ncxzUbttmxrwe7SqWk7Qm0rdG_TxEMoZo39gVhBfWt4sTFM3PvORn_1_t-gSU7Q7EqdxDBZh5e.eIvyJIFpy4d0634N
+[3]:https://zoom.us/rec/play/rzY2W_ncxzUbttmxrwe7SqWk7Qm0rdG_TxEMoZo39gVhBfWt4sTFM3PvORn_1_t-gSU7Q7EqdxDBZh5e.eIvyJIFpy4d0634N "MERN DAY 2"
 
-https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD
+[4]:https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD "MERN DAY 3"
 
-https://stackoverflow.com/
+[5]:https://stackoverflow.com/ "Stackoverflow"
 
 
 
