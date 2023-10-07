@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { ADD_USER } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
 
 // import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
@@ -13,8 +13,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-
-  const [ addUser ] = useMutation(ADD_USER);
+  const [createUser] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -23,33 +22,50 @@ const SignupForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+  
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-
+  
     try {
-      const { data } = await addUser({
-        variables: userFormData,
-      });
-
-      const { token, user } = data.addUser;
-      console.log(user);
-      Auth.login(token);
+      const response = await createUser(userFormData);
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (errorData.message) {
+          // Handle specific error message from the server
+          throw new Error(errorData.message);
+        } else {
+          // Handle other non-JSON error responses
+          throw new Error('Something went wrong during signup.');
+        }
+      }
+  
+      const responseData = await response.json();
+  
+      if (responseData.token && responseData.user) {
+        console.log(responseData.user);
+        Auth.login(responseData.token);
+      } else {
+        console.error('Unexpected response from server:', responseData);
+        throw new Error('Unexpected response from server during signup.');
+      }
     } catch (err) {
-      console.error(err);
+      console.error("Error during signup:", err.message);
       setShowAlert(true);
     }
-
+  
     setUserFormData({
       username: '',
       email: '',
       password: '',
     });
   };
+  
+  
 
   return (
     <>
