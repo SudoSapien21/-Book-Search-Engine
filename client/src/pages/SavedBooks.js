@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Container, Card, Row, Col, Button } from 'react-bootstrap';
+// import React, { useState, useEffect } from 'react';
+import { Container, Card, Button, Row, Col} from 'react-bootstrap';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
@@ -16,7 +15,7 @@ const SavedBooks = () => {
   if(!userData?.username) {
     return (
       <h4>
-        You need to be logged in to see this page. Use the navigation links above to sign up or log in!
+       Something went wrong!!!
       </h4>
     );
   }
