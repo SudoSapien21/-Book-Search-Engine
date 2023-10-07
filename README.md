@@ -65,15 +65,20 @@ Google Book Search Engine is your gateway to a vast literary universe! With Goog
 
 ## Credit
 
-!["Apollo  Graphql]: https://www.apollographql.com/ "Apollo  Graphql"
+[Apollo Graphql:]( https://www.apollographql.com/ )
 
-![2]:https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD "MERN DAY 1"
+[MERN DAY 1](https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD) 
 
-![3]:https://zoom.us/rec/play/rzY2W_ncxzUbttmxrwe7SqWk7Qm0rdG_TxEMoZo39gVhBfWt4sTFM3PvORn_1_t-gSU7Q7EqdxDBZh5e.eIvyJIFpy4d0634N "MERN DAY 2"
+[MERN DAY 2](https://zoom.us/rec/play/rzY2W_ncxzUbttmxrwe7SqWk7Qm0rdG_TxEMoZo39gVhBfWt4sTFM3PvORn_1_t-gSU7Q7EqdxDBZh5e.eIvyJIFpy4d0634N) 
 
-![4]:https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD "MERN DAY 3"
+[MERN DAY 3](https://zoom.us/rec/play/fDGBiCm_UN3q9d2GDETaOXCh0eN_Uxklq_stCzWBSPI3qKRyiL2wVxgokSwBqgxfyF0xvoG1iyHFZnc.sG2yef9ND2rTI9BD) 
 
-1[5]:https://stackoverflow.com/ "Stackoverflow"
+[Stackoverflow](https://stackoverflow.com/)
+
+
+
+## Acknowledgments
+Much appreciattion to BootCamp Instructors, TAs, and Classmates who have helped with codes and understanding how to approach the assignment.
 
 
 
@@ -92,4 +97,8 @@ The following image shows GRAPHQL and HEROKU
 ![GRAPHQL](./Assets/)
 ![HEROKU](./Assets/)
 
+
+## Authors
+Code Provided by UofM Codingbootcamp 
+Modifications was done by ~Clarence Tolson~
 
