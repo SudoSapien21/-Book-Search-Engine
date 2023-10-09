@@ -16,6 +16,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "express-favicon": "^2.0.4",
     "jsonwebtoken": "^9.0.2",
     "react-bootstrap": "^2.9.0"
   }

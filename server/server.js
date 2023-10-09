@@ -1,6 +1,10 @@
 const express = require("express");
+const favicon = require('express-favicon');
 const path = require("path");
 const db = require("./config/connection");
+import { HttpLink, link } from '@apollo/client';
+
+app.use(favicon(__dirname + '/public/favicon.png'));
 
 // importing apollo server
 const { ApolloServer } = require("apollo-server-express");
@@ -35,9 +39,19 @@ app.get("*", (req, res) => {
 });
 
 
+const link = new HttpLink({
+  uri: "http://localhost:4000/graphql"
+  // Additional options
+});
+
+server.start().then(res => {
+  server.applyMiddleware({ app, path: '/' });
+});
+
 db.once("open", () => {
-  app.listen(PORT, () => {
+  app.listen({PORT}, () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 });
+
