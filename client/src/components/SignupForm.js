@@ -1,131 +1,128 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+// import use mutation
+import { useMutation } from "@apollo/client";
+// import the ADD User from the utils
+import { ADD_USER } from "../utils/mutations";
 
-
-import { createUser } from '../utils/API';
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
 
 const SignupForm = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
+  // declared the addUser with the useMutation
+  const [addUser] = useMutation(ADD_USER);
 
-
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
-  
+
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-  
+
     try {
-      const response = await createUser(userFormData);
-  
-      // Log the response status code
-      console.log(response.status);
-  
-      const responseText = await response.text(); // Read the response body once
-  
-      // Log the response text
-      console.log(responseText);
-  
-      if (!response.ok) {
-        const errorData = JSON.parse(responseText); // Parse the response text as JSON
-        if (errorData.message) {
-          // Handle specific error message from the server
-          throw new Error(errorData.message);
-        } else {
-          // Handle other non-JSON error responses
-          throw new Error('Something went wrong during signup.');
-        }
-      }
-  
-      const responseData = JSON.parse(responseText); // Parse the response text as JSON
-  
-      if (responseData.token && responseData.user) {
-        console.log(responseData.user);
-        Auth.login(responseData.token);
-      } else {
-        console.error('Unexpected response from server:', responseData);
-        throw new Error('Unexpected response from the server during signup.');
-      }
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
+      Auth.login(data.addUser.token);
     } catch (err) {
-      console.error("Error during signup:");
+      console.error(err);
       setShowAlert(true);
     }
-  
+
     setUserFormData({
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: "",
     });
   };
-  
-  
 
   return (
     <>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+        <Alert
+          dismissible
+          onClose={() => setShowAlert(false)}
+          show={showAlert}
+          variant="danger"
+        >
           Something went wrong with your signup!
         </Alert>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='username'>Username</Form.Label>
+        <Form.Group>
+          <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
-            type='text'
-            placeholder='Your username'
-            name='username'
+            type="text"
+            placeholder="Your username"
+            name="username"
             onChange={handleInputChange}
             value={userFormData.username}
             required
           />
-          <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Username is required!
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='email'>Email</Form.Label>
+        <Form.Group>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
-            type='email'
-            placeholder='Your email address'
-            name='email'
+            type="email"
+            placeholder="Your email address"
+            name="email"
             onChange={handleInputChange}
             value={userFormData.email}
             required
           />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Email is required!
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='password'>Password</Form.Label>
+        <Form.Group>
+          <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='Your password'
-            name='password'
+            type="password"
+            placeholder="Your password"
+            name="password"
             onChange={handleInputChange}
             value={userFormData.password}
             required
           />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Password is required!
+          </Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(userFormData.username && userFormData.email && userFormData.password)}
-          type='submit'
-          variant='success'>
+          disabled={
+            !(
+              userFormData.username &&
+              userFormData.email &&
+              userFormData.password
+            )
+          }
+          type="submit"
+          variant="success"
+        >
           Submit
         </Button>
       </Form>

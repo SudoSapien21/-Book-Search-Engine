@@ -49,13 +49,13 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
-- [MOCK](#mock)
+- [Mock](#mock)
+- [Authors](#authors)
 
 ## Installation
-npm install @apollo/client 
-npm install graphql
+npm install @apollo/client,
+npm install graphql,
 npm express
-
 
 
 ## Usage
@@ -78,7 +78,10 @@ Google Book Search Engine is your gateway to a vast literary universe! With Goog
 
 
 ## Acknowledgments
-Much appreciattion to BootCamp Instructors, TAs, and Classmates who have helped with codes and understanding how to approach the assignment.
+
+Much appreciattion to BootCamp Instructor 
+TAs, and Classmates who have helped with codes 
+and understanding how to approach the assignment.
 
 
 
@@ -86,7 +89,7 @@ Much appreciattion to BootCamp Instructors, TAs, and Classmates who have helped 
 
 This project is licensed under the MIT license. Click [here](https://opensource.org/licenses/MIT) for more information.
 
-## MOCK
+## Mock
 
 The following animation demonstrates the application functionality:
 
@@ -100,5 +103,7 @@ The following image shows GRAPHQL and HEROKU
 
 ## Authors
 Code Provided by UofM Codingbootcamp 
-Modifications was done by ~Clarence Tolson~
+Modifications was done by Clarence Tolson
+GitHub: 
+[https://github.com/SudoSapien21] 
 
