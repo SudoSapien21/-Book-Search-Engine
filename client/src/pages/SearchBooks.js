@@ -14,6 +14,7 @@ import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import { SAVE_BOOK } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 
+
 const SearchBooks = () => {
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -99,8 +100,7 @@ const SearchBooks = () => {
       <div className="text-light bg-dark">
         <Container>
           <h1>Search for Books!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
+          <Form onSubmit={handleFormSubmit}>          
               <Col xs={12} md={8}>
                 <Form.Control
                   name="searchInput"
@@ -116,7 +116,7 @@ const SearchBooks = () => {
                   Submit Search
                 </Button>
               </Col>
-            </Form.Row>
+            
           </Form>
         </Container>
       </div>

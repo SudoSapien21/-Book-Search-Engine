@@ -1,48 +1,49 @@
-// importing gql from the Apollo
-const { gql } = require("apollo-server-express");
+// server/schema/typeDefs.js
 
+const { gql } = require('apollo-server-express');
+
+// Define the GraphQL types
 const typeDefs = gql`
-  # declaring type book with it values
   type Book {
-    authors: [String]
-    description: String
-    bookId: String!
-    image: String
-    link: String
-    title: String!
-  }
-  # declaring type User with it values
-  type User {
     _id: ID
-    username: String!
-    email: String!
-    bookCount: Int
-    savedBooks: [Book]
-  }
-  # declaring type Auth with it values
-  type Auth {
-    token: ID!
-    user: User
-  }
-  # declaring Save book input with it values
-  input SavedBookInput {
     authors: [String]
-    title: String
     description: String
     bookId: String
     image: String
     link: String
+    title: String
   }
-  # declaring me to the user
+
+  type User {
+    _id: ID
+    username: String
+    email: String
+    password: String
+    savedBooks: [Book]
+    bookCount: Int
+  }
+
   type Query {
-    me: User
+    getUser(username: String!): User
+    getBook(bookId: String!): Book
+    # Add more queries for other GET requests here
   }
-  # declaring the mutation types
+
   type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(input: SavedBookInput): User
-    removeBook(bookId: String!): User
+    createUser(username: String!, email: String!, password: String!): User
+    saveBook(userId: ID!, book: BookInput!): User
+    deleteBook(userId: ID!, bookId: String!): User
+    loginUser(username: String!, password: String!): User
+    # Add more mutations for other POST, PUT, or DELETE requests here
+  }
+
+  input BookInput {
+    authors: [String]
+    description: String
+    bookId: String
+    image: String
+    link: String
+    title: String
   }
 `;
 
